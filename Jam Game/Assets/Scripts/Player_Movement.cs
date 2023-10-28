@@ -7,15 +7,14 @@ using UnityEngine;
 public class Player_Movement : MonoBehaviour
 {
     [SerializeField] float MovementSpeed = 10f;
-    [SerializeField] float JumpHeight = 5f;
-    [SerializeField] float GravityScale = 5;
+    [SerializeField] float JumpHeight = 2f;
+    [SerializeField] float GravityScale = 3f;
 
     //parametrii legati de saritura
-    [SerializeField] Transform GroundCheck;
+    //[SerializeField] Transform GroundCheck;
     [SerializeField] ContactFilter2D Filter ;
-    [SerializeField] float FloorHeight =0.5f;
-    [SerializeField] LayerMask GroundMask;
-     bool _isGrounded;
+    float FloorHeight =0.4f;
+    bool _isGrounded;
     Collider2D[] results = new Collider2D[1];
    
     float velocityY;
@@ -34,7 +33,7 @@ public class Player_Movement : MonoBehaviour
             inputVector.x = -1;
         }
 
-
+        /* old jump code
         if (Physics2D.OverlapBox(GroundCheck.position, GroundCheck.localScale, 0, Filter, results)>0 && velocityY < 0)
         {
             velocityY = 0;
@@ -42,9 +41,11 @@ public class Player_Movement : MonoBehaviour
            // transform.position = new Vector3(transform.position.x, surface.y, 0);
             _isGrounded = true;
         }
-        //else _isGrounded = false;
+        */
+      
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) ) && _isGrounded)
         {
+            
             _isGrounded = false;
             velocityY = Mathf.Sqrt(-2 * JumpHeight * (Physics2D.gravity.y * GravityScale));
         }
