@@ -15,28 +15,23 @@ public class Rope : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+
+        if (Input.GetKey(KeyCode.Mouse0) && rayHit.collider.gameObject.tag == "HookPoint")
         { 
             Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-            if(rayHit.collider.gameObject.tag == "HookPoint")
-            {
-                LineRenderer.SetPosition(0, mousePos);
-                LineRenderer.SetPosition(1, transform.position);
+          
+            LineRenderer.SetPosition(0, mousePos);
+            LineRenderer.SetPosition(1, transform.position);
 
-                DistanceJoint2D.connectedAnchor = mousePos;
-                DistanceJoint2D.enabled = true;
-                LineRenderer.enabled = true;
-            }
-            Debug.Log(rayHit.collider.gameObject.name);
-
-
+            DistanceJoint2D.connectedAnchor = mousePos;
+            DistanceJoint2D.enabled = true;
+            LineRenderer.enabled = true;
         }
         else
         {
             DistanceJoint2D.enabled = false;
             LineRenderer.enabled = false;
-
         }
         if (DistanceJoint2D.enabled)
         {
