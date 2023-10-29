@@ -18,12 +18,18 @@ public class Rope : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         { 
             Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            LineRenderer.SetPosition(0, mousePos);
-            LineRenderer.SetPosition(1,transform.position);
+            var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+            if(rayHit.collider.gameObject.tag == "HookPoint")
+            {
+                LineRenderer.SetPosition(0, mousePos);
+                LineRenderer.SetPosition(1, transform.position);
 
-            DistanceJoint2D.connectedAnchor = mousePos;
-            DistanceJoint2D.enabled = true;
-            LineRenderer.enabled = true;
+                DistanceJoint2D.connectedAnchor = mousePos;
+                DistanceJoint2D.enabled = true;
+                LineRenderer.enabled = true;
+            }
+            Debug.Log(rayHit.collider.gameObject.name);
+
 
         }
         else
